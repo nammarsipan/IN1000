@@ -118,16 +118,33 @@ class Person:
 p1 = Person(3)
 p2 = p1
 p3 = Person(5)
-p4 = p1.doble_alder()
+p4 = p3
+p1.doble_alder()
 print(p1.hent_alder())
 print(p2.hent_alder())
 print(p3.alder_som_maaneder())
 print(p4.hent_alder())
 
+# 6, 6, 60, 5
+# p2 = p1 is an alias.
 
 
+#3a)
+def penger(femkroninger, kronestykker):
+    return ((femkroninger * 5) + kronestykker)
+
+assert penger(2,3) == 13
 
 
+#3b)
+def barnMedVoksen(alder1, alder2):
+    return (alder1 >= 18 and alder2 < 18) or (alder2 >= 18 and alder1 < 18)   
+
+
+assert barnMedVoksen(18, 5) == True
+assert barnMedVoksen(10, 20) == True
+assert barnMedVoksen(20, 30) == False
+assert barnMedVoksen(5, 5) == False
 
 
 
