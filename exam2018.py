@@ -148,7 +148,94 @@ assert barnMedVoksen(5, 5) == False
 
 
 
+#3c)
+def allePositive(tallene):
+    for tall in tallene:
+        if(tall < 0):
+            return False
+        return True
+    
+#1)Den returnerer True dersom første tall er positiv, men det betyr ikke at alle tall i "tallene" er positive
+    
+#2)    
+# listTall = [2,-1,-1]
+# print(allePositive(listTall))
+
+#3)
+def allePositive(tallene):
+    check = True
+    for tall in tallene:
+        if(tall < 0):
+            check = False
+    return check
+    
+listTall = [2,-1,-1]
+assert allePositive(listTall) == False
 
 
+#3d)
+def fyllTilTi(tallene):
+    if len(tallene) > 10:
+        print("Listen inneholder mer enn 10 tall")
+        list = []
+        for i, tall in enumerate(tallene):
+            print(tall)
+            if i <= 10-1:
+                list.append(tall)
+        return list
+    else:
+        list = []
+        for tall in tallene:
+            list.append(tall)
+        if len(list) < 10:
+            for i in range(0, 10-len(list)):
+                list.append(0)
+        return list
+                
+liste = [1,2,3]
+print(fyllTilTi(liste))
 
 
+#3e)
+# class Node:
+#     def __init__(self, verdi):
+#         self._verdi = verdi
+#         self._neste = None
+
+#     def settInn(self, ny):
+#         self._neste = ny
+
+
+# listeStart = Node("a")
+# node_b = Node("b")
+# listeStart.settInn(node_b)
+
+
+#3f)
+class Node:
+    def __init__(self, verdi):
+        self._verdi = verdi
+        self._neste = None
+
+    def settInn(self, ny):
+        self._neste = ny
+
+    def skrivMeg(self):
+        print(self._verdi)
+        if self._neste != None:
+            neste = self._neste.skrivMeg()
+      
+
+listeStart = Node("a")
+#listeStart.skrivMeg()
+node_b = Node("b")
+#node_b.skrivMeg()
+listeStart.settInn(node_b)
+#listeStart.skrivMeg()
+
+ny = Node("c")
+ny.settInn(listeStart)
+listeStart = ny
+listeStart.skrivMeg()
+
+#4a)
