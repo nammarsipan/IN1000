@@ -387,11 +387,6 @@ assert ring(2,[2, -1, -1, 0]) == 2
 assert ring(0,[2, -1, -1, 0]) == 2
 
 #5b)
-
-test1 = [2, -1, -1, 0]
-test2 = [3, -1, -1, 0]
-test3 = [1, -1, 3, 4,2]
-
 def gyldig(aListe):
     maksKobling = len(aListe) - 1
     telling = 0
@@ -405,6 +400,9 @@ def gyldig(aListe):
             
     return True
 
+test1 = [2, -1, -1, 0]
+test2 = [3, -1, -1, 0]
+test3 = [1, -1, 3, 4,2]
 assert gyldig(test1) == True
 assert gyldig(test2) == False
 assert gyldig(test3) == False
