@@ -273,117 +273,138 @@ class Hytte:
 
 #4b)
 
-class Tur:
+# class Tur:
 
-    def __init__(self, beskrivelse, listeHytte):
-        self._beskrivelse = beskrivelse
-        self._listeHytte = listeHytte
+#     def __init__(self, beskrivelse, listeHytte):
+#         self._beskrivelse = beskrivelse
+#         self._listeHytte = listeHytte
     
-    def skrivTur(self):
-        print(self._beskrivelse)
+#     def skrivTur(self):
+#         print(self._beskrivelse)
 
-        for hytte in self._listeHytte:
-            print(hytte)
+#         for hytte in self._listeHytte:
+#             print(hytte)
 
-    def sjekkPrisPlass(self, antallPersoner, maksBelop):
-        totBelop = 0
+#     def sjekkPrisPlass(self, antallPersoner, maksBelop):
+#         totBelop = 0
 
-        for hytte in self._listeHytte:
-            if hytte.sjekkPlass(antallPersoner):
-                totBelop += hytte.totPris(antallPersoner)
-            else:
-                return False
+#         for hytte in self._listeHytte:
+#             if hytte.sjekkPlass(antallPersoner):
+#                 totBelop += hytte.totPris(antallPersoner)
+#             else:
+#                 return False
         
-        if totBelop <= maksBelop:
-            return True
-        else:
-            return False
+#         if totBelop <= maksBelop:
+#             return True
+#         else:
+#             return False
+        
+#     def antallDager(self):
+#         return len(self._listeHytte)
         
 
-#4c)
+# #4c)
         
-class Turplanlegger:
+# class Turplanlegger:
 
-    def __init__(self, hytteFilNavn, turerFilNavn):
-        # refering to the read file methods in the constructor
-        self._hytter = self._hytterFraFil(hytteFilNavn)
-        self._turer = self._turerFraFil(turerFilNavn)
+#     def __init__(self, hytteFilNavn, turerFilNavn):
+#         # refering to the read file methods in the constructor
+        
+#         # dictionary of hytter
+#         self._hytter = self._hytterFraFil(hytteFilNavn)
+        
+#         # list of turer
+#         self._turer = self._turerFraFil(turerFilNavn)
 
-    def _hytteFraFil(self, filnavn):
-        hytter = {}
+#     def _hytterFraFil(self, filnavn):
+#         hytter = {}
 
-        with open(filnavn, "r") as infile:
-            for line in infile:
-                dataLine = line.strip().split()
-                hytte = Hytte(dataLine[0], int(dataLine[1]), float(dataLine[2]))
-                hytter[hytte.hentNavn()] = hytte
+#         with open(filnavn, "r") as infile:
+#             for line in infile:
+#                 dataLine = line.strip().split()
+#                 hytte = Hytte(dataLine[0], int(dataLine[1]), float(dataLine[2]))
+#                 hytter[hytte.hentNavn()] = hytte
                 
-            # returns a dictionary of hytte, where hyttenavn is key
-            return hytter
+#             # returns a dictionary of hytte, where hyttenavn is key
+#             return hytter
 
                         
-    def _turerFraFil(self, filnavn):
-        turer = []
+#     def _turerFraFil(self, filnavn):
+#         turer = []
 
-        with open(filnavn, "r") as infile:
+#         with open(filnavn, "r") as infile:
              
-             # readfile() read the first line
-             turBeskrivelse = infile.readfile().strip()
+#              # readfile() read the first line
+#              turBeskrivelse = infile.readfile().strip()
 
-             # check if turBeskrivelse is empty, loop over the entire file if not
-             while turBeskrivelse != "":
+#              # check if turBeskrivelse is empty, loop over the entire file if not
+#              while turBeskrivelse != "":
                 
-                # go to next line with a string of hytter
-                hytteLinje = infile.readfile.strip()
+#                 # go to next line with a string of hytter
+#                 hytteLinje = infile.readfile.strip()
 
-                # split and creates a list of hytter-names
-                hytter = hytteLinje.split()
+#                 # split and creates a list of hytter-names
+#                 hytter = hytteLinje.split()
 
-                # assume that the hytte exists and refers to self._hytter as dictionary
-                # creates a list that refers to hytte-objects
-                hytteListe = []
-                for hytte in hytter:
-                     hytteListe.append(self._hytter[hytte])
+#                 # assume that the hytte exists and refers to self._hytter as dictionary
+#                 # creates a list that refers to hytte-objects
+#                 hytteListe = []
+#                 for hytte in hytter:
+#                      hytteListe.append(self._hytter[hytte])
 
-                # add Tur to turer, where hytteliste is a list of hytte-objects
-                turer.append(Tur(turBeskrivelse, hytteListe))
+#                 # add Tur to turer, where hytteliste is a list of hytte-objects
+#                 turer.append(Tur(turBeskrivelse, hytteListe))
                 
-                # jump to next line and read in the next tur-beskrivelse
-                turBeskrivelse = infile.readfile().strip()
+#                 # jump to next line and read in the next tur-beskrivelse
+#                 turBeskrivelse = infile.readfile().strip()
 
         
-        return turer
-                
+#         return turer
+
+#  #4d)
+#     def finnTurer(self, antallPersoner, maksBelop, maksDager):
+#         for tur in self._turer:
+#             if tur.sjekkPrisPlass and (tur.antallDager <= maksDager):
+#                 tur.skrivTur()
+
+# #4e)
+# def hovedprogram():
+#     testTur = Turplanlegger("hytter.txt", "turer.txt")
+#     testTur.finnTurer(7, 7000, 5)
+
+# hovedprogram()
 
 
-                  
+#5a)
+def ring(sIndeks, aListe):
+    while aListe[sIndeks] != -1:
+        sIndeks = aListe[sIndeks]
+    
+    return sIndeks
 
+assert ring(3,[2, -1, -1, 0]) == 2
+assert ring(2,[2, -1, -1, 0]) == 2
+assert ring(0,[2, -1, -1, 0]) == 2
 
+#5b)
 
+test1 = [2, -1, -1, 0]
+test2 = [3, -1, -1, 0]
+test3 = [1, -1, 3, 4,2]
 
+def gyldig(aListe):
+    maksKobling = len(aListe) - 1
+    telling = 0
 
+    for sIndeks, v in enumerate(aListe):
+        while aListe[sIndeks] != -1:
+            sIndeks = aListe[sIndeks]
+            telling += 1
+            if telling > maksKobling:
+                return False
+            
+    return True
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+assert gyldig(test1) == True
+assert gyldig(test2) == False
+assert gyldig(test3) == False
