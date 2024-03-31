@@ -239,3 +239,151 @@ listeStart = ny
 listeStart.skrivMeg()
 
 #4a)
+print("---------------------------------------------------------------------------\n")
+
+class Hytte:
+
+    def __init__(self, navn, sengePlasser, prisNatt):
+        self._navn = navn
+        self._sengePlasser = sengePlasser
+        self._prisNatt = prisNatt
+
+    def hentNavn(self):
+        return self._navn
+    
+    def totPris(self, antallPersoner):
+        return antallPersoner * self._prisNatt
+    
+    def sjekkPlass(self, antallPersoner):
+        if self._sengePlasser >= antallPersoner:
+            return True
+        else:
+            return False
+    
+    def __str__(self):
+        output = ("Hyttens navn er: " + str(self._navn) + "\n"
+                  "Antall sengeplasser: " + str(self._sengePlasser) + "\n"
+                  "Pris per natt/seng: " + str(self._prisNatt))
+        
+    def __eq__(self, other):
+        if self._navn == other.hentNavn():
+            return True
+        else:
+            return False
+
+#4b)
+
+class Tur:
+
+    def __init__(self, beskrivelse, listeHytte):
+        self._beskrivelse = beskrivelse
+        self._listeHytte = listeHytte
+    
+    def skrivTur(self):
+        print(self._beskrivelse)
+
+        for hytte in self._listeHytte:
+            print(hytte)
+
+    def sjekkPrisPlass(self, antallPersoner, maksBelop):
+        totBelop = 0
+
+        for hytte in self._listeHytte:
+            if hytte.sjekkPlass(antallPersoner):
+                totBelop += hytte.totPris(antallPersoner)
+            else:
+                return False
+        
+        if totBelop <= maksBelop:
+            return True
+        else:
+            return False
+        
+
+#4c)
+        
+class Turplanlegger:
+
+    def __init__(self, hytteFilNavn, turerFilNavn):
+        # refering to the read file methods in the constructor
+        self._hytter = self._hytterFraFil(hytteFilNavn)
+        self._turer = self._turerFraFil(turerFilNavn)
+
+    def _hytteFraFil(self, filnavn):
+        hytter = {}
+
+        with open(filnavn, "r") as infile:
+            for line in infile:
+                dataLine = line.strip().split()
+                hytte = Hytte(dataLine[0], int(dataLine[1]), float(dataLine[2]))
+                hytter[hytte.hentNavn()] = hytte
+                
+            # returns a dictionary of hytte, where hyttenavn is key
+            return hytter
+
+                        
+    def _turerFraFil(self, filnavn):
+        turer = []
+
+        with open(filnavn, "r") as infile:
+             
+             # readfile() read the first line
+             turBeskrivelse = infile.readfile().strip()
+
+             # check if turBeskrivelse is empty, loop over the entire file if not
+             while turBeskrivelse != "":
+                
+                # go to next line with a string of hytter
+                hytteLinje = infile.readfile.strip()
+
+                # split and creates a list of hytter-names
+                hytter = hytteLinje.split()
+
+                # assume that the hytte exists and refers to self._hytter as dictionary
+                # creates a list that refers to hytte-objects
+                hytteListe = []
+                for hytte in hytter:
+                     hytteListe.append(self._hytter[hytte])
+
+                # add Tur to turer, where hytteliste is a list of hytte-objects
+                turer.append(Tur(turBeskrivelse, hytteListe))
+                
+                # jump to next line and read in the next tur-beskrivelse
+                turBeskrivelse = infile.readfile().strip()
+
+        
+        return turer
+                
+
+
+                  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
