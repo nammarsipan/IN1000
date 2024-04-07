@@ -102,3 +102,45 @@ def regn_poengsum(fn):
     return lagOrdbok
 
 print(regn_poengsum("file.txt"))
+
+#3f)
+def gull(lagoversikt):
+    
+    vinnerlag = ""
+    hPoengsum = 0
+
+    for lag in lagoversikt:
+        if lagoversikt[lag] > hPoengsum:
+            hPoengsum = lagoversikt[lag]
+            vinnerlag = lag
+
+    return vinnerlag
+
+#3g)
+def finn_gull(fn):
+    print(gull(regn_poengsum(fn)))
+
+finn_gull("file.txt")
+
+
+print("---------------------------------- 4 ----------------------------------------")
+
+#4a)
+class Rett:
+
+    def __init__(self, navn, pris, innholdListe):
+        self._navn = navn
+        self._pris = pris
+        self._innholdListe = innholdListe
+
+    def sjekkInnholdOK(self, allergiListe):
+        for allergi in allergiListe:
+            if allergi in self._innholdListe:
+                return False
+            
+        return True
+    
+    def __str__(self):
+        innhold = ", ".join(self._innholdListe)
+        msg = ("Retten " + self._navn + ", kostner " + str(self._pris) + " per rett og inneholder: " + innhold + ".")
+        return msg
