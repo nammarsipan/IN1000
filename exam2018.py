@@ -400,9 +400,9 @@ def gyldig(aListe):
             
     return True
 
-test1 = [2, -1, -1, 0]
+test1 = [1, 2, 4, 2, 3]
 test2 = [3, -1, -1, 0]
 test3 = [1, -1, 3, 4,2]
-assert gyldig(test1) == True
+assert gyldig(test1) == False
 assert gyldig(test2) == False
 assert gyldig(test3) == False
