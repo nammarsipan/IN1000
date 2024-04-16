@@ -144,3 +144,160 @@ class Rett:
         innhold = ", ".join(self._innholdListe)
         msg = ("Retten " + self._navn + ", kostner " + str(self._pris) + " per rett og inneholder: " + innhold + ".")
         return msg
+    
+#4b)
+class Kategori:
+
+    def __init__(self, kategorinavn, rettListe):
+        self._kategorinavn = kategorinavn
+        self._rettListe = rettListe
+
+    def hentOkRetter(self, allergiListe):    
+        nyRettListe = []
+        for rett in self._rettListe:
+            if rett.sjekkInnholdOK(allergiListe):
+                nyRettListe.append(rett)
+        
+        return nyRettListe
+
+#4c)
+class Meny:
+
+    def __init__(self, kNavneListe):
+        self._kNavneListe = kNavneListe
+        self._meny = self.byggMeny() 
+
+    def byggMeny(self):
+        meny = {}
+        for kategoriNavn in self._kNavneListe:
+            kategoriFilNavn = str(kategoriNavn + str(".txt"))
+            print(kategoriFilNavn)
+            meny[kategoriNavn] = self._lesKategoriFil(kategoriFilNavn)
+
+        return meny
+
+    def hentRedusertMeny(self, allergiListe):
+        redusertMeny = {}
+        for kategoriNavn, kategori in self._meny.items():
+            nyKategori = Kategori(kategoriNavn, kategori.hentOkRetter(allergiListe))
+            redusertMeny[kategoriNavn] = nyKategori
+        return redusertMeny
+    
+    def _lesKategoriFil(self, kNavn):
+        retter = []
+        with open(kNavn, "r") as katfil:
+            for linje in katfil:
+                linje = linje.split()
+                retter.append(Rett(linje[0], linje[1], linje[2:]))
+        nyKat = Kategori(kNavn, retter)
+        return nyKat
+    
+#4d)
+class Kunde:
+
+    def __init__(self, tlfNummer, allergier):
+        self._tlfNummer = tlfNummer
+        self._allergier = allergier
+
+    def velgRetter(self, meny):
+        menyValg = []
+        redusertMeny = meny.hentRedusertMeny(self._allergier)
+        for kategoriNavn, kategori in redusertMeny.items():
+            print(f'{kategoriNavn} har følgende retter: ')
+            for rett in kategori._rettListe:
+                print(rett)
+
+            valg = input("Tast in navnet på retten for å velge, eller tom-linje for å hoppe til neste kategori: ")
+            print(valg)
+            if valg != "":
+                menyValg.append(str(valg))
+        
+        print("Da har vi gått gjennom hele menyen")
+        return menyValg
+            
+#4e)
+class Takeaway:
+
+    def __init__(self, kNavnListe, kundeFilNavn):
+        self.meny = Meny(kNavnListe)
+        self.kundeDict = self._lesKundefil(kundeFilNavn)
+    
+    def betjenKunde(self, tlfNummer):
+        bestilling = self.kundeDict[tlfNummer].velgRetter(self.meny)
+        self._lagOgLeverMat(bestilling)
+
+    def _lagOgLeverMat(self, bestilling):
+        print("Kundends bestilling er: ")
+        for rett in bestilling:
+            print(rett)
+
+    def _lesKundefil(self, kundefilnavn):
+        kunder = {}
+        with open(kundefilnavn, "r") as kundefil:
+            for linje in kundefil:
+                data = linje.strip().split()
+                kunder[data[0]] = Kunde(data[0], data[1:])
+                
+        return kunder
+
+def Hovedprogram():
+    kategorier = ["Forretter", "Hovedretter", "Desserter"]
+    takeawayBestilling = Takeaway(kategorier, "kunder.txt")
+    kundeId = input("oppgi et telefonnummer: ")
+    while kundeId != "":
+        takeawayBestilling.betjenKunde(kundeId)
+        kundeId = input("Oppgi telefonnr: ")
+
+#Hovedprogram()
+
+#5)
+
+def check_nested(lst):
+    for val in lst:
+        if isinstance(val, list):
+            return True
+        return False
+    
+def godkjenn(aldre):
+
+    if check_nested(aldre) == False:
+        for val in aldre:
+            if val >= 18:
+                return True
+        return False
+    else:
+        count = []
+        for valList in aldre:
+            check = False
+            for valNested in valList:
+                if valNested >= 18:
+                    check = True
+            if check:
+                count.append(1)
+        
+        if len(aldre) == sum(count):
+            return True
+        else:
+            return False
+
+def godkjenn2(aldre):
+
+    for val in aldre:
+        voksen = False
+        for val2 in val:
+            if val2 >= 18:
+                voksen = True
+        if voksen == False:
+            return False
+    return True
+
+
+def godkjenn3(familier):
+    for familie in familier:
+        if max(familie)<18:
+            return False
+    return True
+
+test = [10, 2, 18]
+
+print(godkjenn3(test))
