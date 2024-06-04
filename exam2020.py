@@ -41,6 +41,7 @@ class Emne:
         self._emnekode = emnekode #string
         self._studenter = studenter #dict with studen as objects
         self._rettere = rettere #list of rettere as objects
+        self._obliger = {}
 
 #4b)
     def _administrer(self):
@@ -67,15 +68,33 @@ class Emne:
                 print("Du har avlsuttet programmet. \n")
             else:
                 print("Du har tastet inn ugyldig kommando, prøv på nytt. \n")
-                
+
+
+#4g
+
     def _opprettOblig(self):
-        return NotImplemented
+        obligId = "oblig" + str(len(self._obliger) + 1)
+        frist = input(f"Oppgi frist or oblig {obligID} i format ååmmdd: ")
+        self._obliger[obligId] = Oblig(obligId, frist)
     
     def _startRetting(self):
-        return NotImplemented
-    
+        dagensDato = input("Oppgi dagens dato: ")
+        for obligId, oblig in self._obliger.items():
+            if oblig._klarForRetting(dagensDato):
+                besvarelser = oblig._hentBesvarelser()
+                resultat = oblig.fordelRetting(besvarelser, self._rettere)
+                for student, resultat in resultat.items():
+                    self._studenter[student].registrer(obligId, resultat)
+
     def _skrivEksamensliste(self):
-        return NotImplemented
+        eksamensListe = []
+        for studentId, student in self._studenter.items():
+            if student.altGodkjent(len(self._obliger)):
+                eksamensListe.append[studentId]
+
+        print("Følgende studenter har alle obliger godkjent og er klar til eksamen: ")
+        for studentId in eksamensListe:
+            print(f'Student med brukernavn {studentId}')
 
 
 #4c)
@@ -97,7 +116,10 @@ class Student:
             return True
         else:
             return False
-        
+    
+    def hentBrukernavn(self):
+        return self._brukernavn
+
 #4d)
 class Retter:
     def __init__(self, brukernavn):
@@ -109,7 +131,7 @@ class Retter:
 
 #4e)
 class Oblig:
-    def __init__(self, obligId, frist, statusRetting):
+    def __init__(self, obligId, frist):
         self._obligId = obligId
         self._frist = frist #ååmmdd
         self._statusRetting = False
@@ -145,18 +167,30 @@ class Oblig:
         return resultater
 
         
+#5)
+
+def sjekk_om_fyord(setning, fyord, synonym_liste):
+
+    synonymer = []
+    for synonymGruppe in synonym_liste:
+        if fyord in synonymGruppe:
+            for synonym in synonymGruppe:
+                synonymer.append(synonym)
+
+    setningListe = setning.strip().split()
+    for ord in setningListe:
+        if ord in synonymer:
+            return True
+    
+    return False
+
+assert sjekk_om_fyord("spis masse godsaker", "snop", [["saft","lemonade"], ["snacks","snop","godsaker"],["mye","masse"]]) == True
+assert sjekk_om_fyord("spis masse godsaker", "lemonade", [["saft","lemonade"],["snacks","snop","godsaker"],["mye","masse"]]) == False
 
 
+a = 10
+b = 20
 
-
-
-
-
-
-
-# studenter = {1111: "student"}
-# rettere = ["retter1", "retter2"]
-# emnekode = 12345
-
-# testEmne = Emne(emnekode, studenter, rettere)
-# testEmne._administrer()
+for a in range(0, 10):
+    print(f'Test print a = {a}, \n' 
+          f'og b = {20}')

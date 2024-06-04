@@ -292,12 +292,6 @@ def godkjenn2(aldre):
     return True
 
 
-def godkjenn3(familier):
-    for familie in familier:
-        if max(familie)<18:
-            return False
-    return True
-
 test = [10, 2, 18]
 
-print(godkjenn3(test))
+print(godkjenn2(test))
